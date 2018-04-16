@@ -1,0 +1,46 @@
+{
+  "name": "ttg-2018",
+  "version": "1.0.0",
+  "description": "Three Thing Game 2018",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prettier": "prettier --write",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "**/*.{ts,js}": [
+      "npm run prettier",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/robcrocombe/TTG-2018.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/robcrocombe/TTG-2018/issues"
+  },
+  "homepage": "https://github.com/robcrocombe/TTG-2018#readme",
+  "prettier": {
+    "printWidth": 100,
+    "singleQuote": true,
+    "trailingComma": "es5",
+    "parser": "typescript"
+  },
+  "devDependencies": {
+    "husky": "0.14.3",
+    "lint-staged": "7.0.4",
+    "prettier": "1.12.0"
+  },
+  "dependencies": {
+    "@types/mainloop.js": "1.0.5",
+    "gulp": "4.0.0",
+    "mainloop.js": "1.0.4",
+    "typescript": "2.8.1",
+    "webpack": "4.5.0",
+    "webpack-dev-server": "3.1.3"
+  }
+}
