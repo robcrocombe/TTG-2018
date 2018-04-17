@@ -13,11 +13,14 @@ const jsConfig = {
   },
   devtool: 'source-map',
   module: {
-    loaders: [
+    rules: [
       {
         test: /\.ts$/,
         exclude: /(node_modules|build)/,
         loader: 'awesome-typescript-loader',
+        options: {
+          useCache: true,
+        },
       },
     ],
   },
@@ -29,6 +32,7 @@ const jsConfig = {
     filename: 'app.bundle.js',
   },
   plugins: [new CheckerPlugin()],
+  mode: process.env.NODE_ENV,
 };
 
 function jsDev() {
@@ -73,4 +77,4 @@ function htmlCopy() {
 gulp.task('dev:build', jsDev);
 gulp.task('pro:build', jsProd);
 gulp.task('dev:html', htmlCopy);
-gulp.task('default', ['dev:html'], jsDev);
+gulp.task('default', gulp.series('dev:html', 'dev:build'));
