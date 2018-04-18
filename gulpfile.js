@@ -4,8 +4,35 @@ const path = require('path');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
 const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 let firstRun = true;
+
+class SilentHardSource {
+  apply(compiler) {
+    compiler.plugin('hard-source-log', message => {
+      if (message.level === 'error' || message.level === 'warning') {
+        console[message.level].call(console, `[hard-source:${message.from}]`, message.message);
+      }
+    });
+  }
+}
+
+const statConfig = {
+  colors: gutil.colors.supportsColor,
+  hash: false,
+  timings: false,
+  chunks: false,
+  chunkModules: false,
+  modules: false,
+  children: true,
+  version: true,
+  cached: false,
+  cachedAssets: false,
+  reasons: false,
+  source: false,
+  errorDetails: false,
+};
 
 const jsConfig = {
   resolve: {
@@ -20,6 +47,7 @@ const jsConfig = {
         loader: 'awesome-typescript-loader',
         options: {
           useCache: true,
+          cacheDirectory: '.wpcache/ats-cache',
         },
       },
     ],
@@ -29,45 +57,38 @@ const jsConfig = {
   },
   output: {
     path: path.resolve(__dirname, 'build/'),
-    filename: 'app.bundle.js',
+    filename: 'bundle.js',
   },
-  plugins: [new CheckerPlugin()],
+  plugins: [
+    new CheckerPlugin(),
+    new HardSourceWebpackPlugin({
+      cacheDirectory: path.resolve(__dirname, '.wpcache/hard-source/[confighash]'),
+    }),
+    new SilentHardSource(),
+  ],
   mode: process.env.NODE_ENV,
 };
 
 function jsDev() {
   new WebpackDevServer(webpack(jsConfig), {
-    contentBase: path.join(__dirname, 'build'),
-    stats: {
-      colors: gutil.colors.supportsColor,
-      hash: false,
-      timings: false,
-      chunks: false,
-      chunkModules: false,
-      modules: false,
-      children: true,
-      version: true,
-      cached: false,
-      cachedAssets: false,
-      reasons: false,
-      source: false,
-      errorDetails: false,
-    },
+    contentBase: path.join(__dirname, 'build/'),
+    stats: statConfig,
   }).listen(3000, 'localhost', err => {
     if (err) throw new gutil.PluginError('webpack-dev-server', err);
     gutil.log('[webpack-dev-server]', 'http://localhost:3000/');
   });
 }
 
-function jsProd() {
-  const config = Object.assign(
-    {
-      plugins: [new webpack.optimize.UglifyJsPlugin()],
-    },
-    jsConfig
-  );
+function jsProd(done) {
+  webpack(jsConfig, (err, stats) => {
+    if (err) {
+      gulp.emit('error', new gutil.PluginError('webpack', err));
+    }
 
-  webpack(config);
+    gutil.log('[webpack]', stats.toString(statConfig));
+
+    done();
+  });
 }
 
 function htmlCopy() {
@@ -77,4 +98,5 @@ function htmlCopy() {
 gulp.task('dev:build', jsDev);
 gulp.task('pro:build', jsProd);
 gulp.task('dev:html', htmlCopy);
+gulp.task('dist', gulp.series('dev:html', 'pro:build'));
 gulp.task('default', gulp.series('dev:html', 'dev:build'));

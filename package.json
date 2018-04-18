@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "NODE_ENV=development gulp",
+    "dist": "NODE_ENV=production gulp dist",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prettier": "prettier --write",
     "precommit": "lint-staged"
@@ -41,6 +42,7 @@
     "awesome-typescript-loader": "5.0.0",
     "gulp": "4.0.0",
     "gulp-util": "3.0.8",
+    "hard-source-webpack-plugin": "0.6.4",
     "mainloop.js": "1.0.4",
     "typescript": "2.8.1",
     "webpack": "4.5.0",
