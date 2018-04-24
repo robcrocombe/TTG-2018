@@ -1,3 +1,7 @@
+// TODO: Update HardSourceWebpackPlugin when fixed
+// https://github.com/mzgoddard/hard-source-webpack-plugin/issues/299
+process.noDeprecation = true;
+
 const gulp = require('gulp');
 const gutil = require('gulp-util');
 const path = require('path');
@@ -8,6 +12,7 @@ const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 let firstRun = true;
 
+// Stop HardSourceWebpackPlugin from printing info about its cache
 class SilentHardSource {
   apply(compiler) {
     compiler.plugin('hard-source-log', message => {
@@ -18,10 +23,25 @@ class SilentHardSource {
   }
 }
 
+// Log which files have changed on watch
+class ChangedFilesWatcher {
+  apply(compiler) {
+    compiler.plugin('watch-run', (compiler, done) => {
+      const changedTimes = compiler.watchFileSystem.watcher.mtimes;
+      const changedFiles = Object.keys(changedTimes)
+        .map(file => `\n  ${path.relative(__dirname, file)}`)
+        .join('');
+      if (changedFiles.length) {
+        console.log('\nFiles changed:', changedFiles);
+      }
+      done();
+    });
+  }
+}
+
 const statConfig = {
   colors: gutil.colors.supportsColor,
   hash: false,
-  timings: false,
   chunks: false,
   chunkModules: false,
   modules: false,
@@ -38,7 +58,7 @@ const jsConfig = {
   resolve: {
     extensions: ['.ts', '.js'],
   },
-  devtool: 'source-map',
+  devtool: 'cheap-source-map',
   module: {
     rules: [
       {
@@ -65,8 +85,9 @@ const jsConfig = {
       cacheDirectory: path.resolve(__dirname, '.wpcache/hard-source/[confighash]'),
     }),
     new SilentHardSource(),
+    new ChangedFilesWatcher(),
   ],
-  mode: process.env.NODE_ENV,
+  mode: process.env.NODE_ENV || 'development',
 };
 
 function jsDev() {
@@ -79,15 +100,23 @@ function jsDev() {
   });
 }
 
-function jsProd(done) {
-  webpack(jsConfig, (err, stats) => {
-    if (err) {
-      gulp.emit('error', new gutil.PluginError('webpack', err));
-    }
+function jsProd() {
+  return new Promise((resolve, reject) => {
+    webpack(jsConfig, (err, stats) => {
+      if (err) {
+        reject(err);
+        return;
+      }
 
-    gutil.log('[webpack]', stats.toString(statConfig));
+      if (stats.compilation.errors && stats.compilation.errors.length) {
+        reject(stats.toString(statConfig));
+        return;
+      }
 
-    done();
+      gutil.log('[webpack]', stats.toString(statConfig));
+
+      resolve();
+    });
   });
 }
 
