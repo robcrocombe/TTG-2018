@@ -88,6 +88,7 @@ const jsConfig = {
     new ChangedFilesWatcher(),
   ],
   mode: process.env.NODE_ENV || 'development',
+  watch: process.env.NODE_ENV !== 'production',
 };
 
 function jsDev() {
