@@ -16,6 +16,6 @@ export function update(delta: number) {
 
 export function draw(fps: number) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  radar.draw(ctx);
   light.draw();
+  radar.draw(ctx);
 }

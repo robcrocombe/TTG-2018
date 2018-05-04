@@ -4,8 +4,8 @@ export default class Light {
   readonly canvas: HTMLCanvasElement;
   readonly ctx: CanvasRenderingContext2D;
   readonly width = 380;
-  readonly height = 300;
-  angle: number;
+  readonly height = 500;
+  angle: number = 0;
   pos: Point;
 
   constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
@@ -18,11 +18,11 @@ export default class Light {
   }
 
   public update(delta: number, mouse: Mouse) {
-    const targetX = mouse.pos.x - (this.pos.x + this.width + this.height / 2);
+    const targetX = mouse.pos.x - this.pos.x;
     const targetY = mouse.pos.y - this.pos.y;
     const rotation = Math.atan2(targetY, targetX);
 
-    this.angle = Math.PI + rotation;
+    this.angle = -(Math.PI * 0.5 - rotation);
   }
 
   public draw() {
@@ -48,10 +48,25 @@ export default class Light {
     fill: CanvasGradient
   ) {
     this.ctx.save();
-    this.ctx.translate(this.pos.x, this.pos.y);
-    // this.ctx.rotate(this.angle);
     this.ctx.beginPath();
-    this.ctx.moveTo(0, 0);
+    this.ctx.arc(this.pos.x, this.pos.y, 1, 0, 2 * Math.PI);
+    this.ctx.strokeStyle = '#ff0000';
+    this.ctx.stroke();
+    this.ctx.closePath();
+    this.ctx.restore();
+
+    // this.ctx.save();
+    // this.ctx.fillStyle = '#fff';
+    // this.ctx.font = '30px Arial';
+    // this.ctx.fillText(this.angle.toString(), 10, 50);
+    // this.ctx.restore();
+
+    this.ctx.save();
+    this.ctx.translate(this.pos.x, this.pos.y);
+    this.ctx.rotate(this.angle);
+    this.ctx.translate(-this.pos.x, -this.pos.y);
+    this.ctx.beginPath();
+    this.ctx.moveTo(this.pos.x, this.pos.y);
     this.ctx.lineTo(x + triangleWidth / 2, y + triangleHeight);
     this.ctx.lineTo(x - triangleWidth / 2, y + triangleHeight);
     this.ctx.closePath();
