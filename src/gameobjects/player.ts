@@ -13,7 +13,7 @@ export default class Player extends Drawable {
     ctx.lineWidth = 3;
 
     ctx.beginPath();
-    ctx.rect(this.position.x, this.position.y, this.width, this.height);
+    ctx.rect(this.pos.x, this.pos.y, this.width, this.height);
     ctx.stroke();
     ctx.fill();
   }
