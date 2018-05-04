@@ -29,10 +29,12 @@ export default class Enemy extends Drawable {
   public update(delta: number) {}
 
   public draw(ctx: CanvasRenderingContext2D) {
+    ctx.save();
     ctx.fillStyle = '#ffa500';
     ctx.beginPath();
     ctx.rect(this.position.x, this.position.y, this.width, this.height);
     ctx.stroke();
     ctx.fill();
+    ctx.restore();
   }
 }

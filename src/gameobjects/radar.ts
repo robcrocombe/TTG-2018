@@ -23,6 +23,7 @@ export default class Radar extends Drawable {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
+    ctx.save();
     ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
     ctx.strokeStyle = '#5fc345';
     ctx.lineWidth = 3;
@@ -61,5 +62,7 @@ export default class Radar extends Drawable {
         ctx.fill();
       });
     }
+
+    ctx.restore();
   }
 }
