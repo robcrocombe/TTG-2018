@@ -1,13 +1,12 @@
 export default class Drawable {
-  protected width: number;
-  protected height: number;
-
-  public position: Point;
+  public width: number;
+  public height: number;
+  public pos: Point;
 
   constructor(inWidth: number, inHeight: number, inPosition: Point) {
     this.width = inWidth;
     this.height = inHeight;
 
-    this.position = inPosition;
+    this.pos = inPosition;
   }
 }

@@ -12,11 +12,11 @@ export default class Player extends Drawable {
 
   public update(delta: number) {
     if (Keydown.space) {
-      this.position.y += this.balast * delta;
+      this.pos.y += this.balast * delta;
     }
 
-    if (this.position.y > this.targetY) {
-      this.position.y -= this.buoyancy * delta;
+    if (this.pos.y > this.targetY) {
+      this.pos.y -= this.buoyancy * delta;
     }
   }
 
@@ -26,7 +26,7 @@ export default class Player extends Drawable {
     ctx.lineWidth = 3;
 
     ctx.beginPath();
-    ctx.rect(this.position.x, this.position.y, this.width, this.height);
+    ctx.rect(this.pos.x, this.pos.y, this.width, this.height);
     ctx.stroke();
     ctx.fill();
     ctx.closePath();

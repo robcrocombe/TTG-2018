@@ -12,7 +12,7 @@ canvas.height = window.innerHeight;
 
 const player = new Player(100, 50, { x: 400, y: 300 });
 const radar = new Radar(300, 300, { x: 200, y: 300 });
-const light = new Light(canvas, ctx);
+const light = new Light(380, 500, { x: canvas.width / 2, y: canvas.height / 2 });
 const mouse = new Mouse(canvas);
 const enemies = [
   new Enemy({ x: 300, y: 200 }, EnemyType.Shark),
@@ -34,7 +34,7 @@ export function draw(fps: number) {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   player.draw(ctx);
-  light.draw();
+  light.draw(ctx);
   radar.draw(ctx);
 
   enemies.forEach(enemy => {

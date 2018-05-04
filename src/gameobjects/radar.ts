@@ -16,10 +16,10 @@ export default class Radar extends Drawable {
     let newAngle = this.indicatorAngle + speed;
     this.indicatorAngle = newAngle;
 
-    this.indicatorLineEnd.x = this.position.x + Math.cos(newAngle) * this.width * 0.45;
-    this.indicatorLineEnd.y = this.position.y + Math.sin(newAngle) * this.width * 0.45;
+    this.indicatorLineEnd.x = this.pos.x + Math.cos(newAngle) * this.width * 0.45;
+    this.indicatorLineEnd.y = this.pos.y + Math.sin(newAngle) * this.width * 0.45;
 
-    this.bleeps = enemies.map(enemy => enemy.position);
+    this.bleeps = enemies.map(enemy => enemy.pos);
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
@@ -28,28 +28,28 @@ export default class Radar extends Drawable {
     ctx.lineWidth = 3;
 
     ctx.beginPath();
-    ctx.arc(this.position.x, this.position.y, this.width * 0.45, 0, 2 * Math.PI);
+    ctx.arc(this.pos.x, this.pos.y, this.width * 0.45, 0, 2 * Math.PI);
     ctx.stroke();
     ctx.fill();
 
     ctx.beginPath();
-    ctx.arc(this.position.x, this.position.y, this.width * 0.35, 0, 2 * Math.PI);
+    ctx.arc(this.pos.x, this.pos.y, this.width * 0.35, 0, 2 * Math.PI);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(this.position.x, this.position.y, this.width * 0.25, 0, 2 * Math.PI);
+    ctx.arc(this.pos.x, this.pos.y, this.width * 0.25, 0, 2 * Math.PI);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(this.position.x, this.position.y, this.width * 0.15, 0, 2 * Math.PI);
+    ctx.arc(this.pos.x, this.pos.y, this.width * 0.15, 0, 2 * Math.PI);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.arc(this.position.x, this.position.y, this.width * 0.05, 0, 2 * Math.PI);
+    ctx.arc(this.pos.x, this.pos.y, this.width * 0.05, 0, 2 * Math.PI);
     ctx.stroke();
 
     ctx.beginPath();
-    ctx.moveTo(this.position.x, this.position.y);
+    ctx.moveTo(this.pos.x, this.pos.y);
     ctx.lineTo(this.indicatorLineEnd.x, this.indicatorLineEnd.y);
     ctx.stroke();
 

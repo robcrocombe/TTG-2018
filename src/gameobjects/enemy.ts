@@ -31,7 +31,7 @@ export default class Enemy extends Drawable {
   public draw(ctx: CanvasRenderingContext2D) {
     ctx.fillStyle = '#ffa500';
     ctx.beginPath();
-    ctx.rect(this.position.x, this.position.y, this.width, this.height);
+    ctx.rect(this.pos.x, this.pos.y, this.width, this.height);
     ctx.stroke();
     ctx.fill();
   }
