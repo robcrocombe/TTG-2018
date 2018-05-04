@@ -3,6 +3,7 @@ import Drawable from '../primitives/drawable';
 export default class Radar extends Drawable {
   private indicatorAngle;
   private indicatorLineEnd: Point;
+  // private bleeps: Point[];
 
   constructor(inWidth: number, inHeight: number, inPosition: Point) {
     super(inWidth, inHeight, inPosition);
@@ -10,13 +11,15 @@ export default class Radar extends Drawable {
     this.indicatorAngle = 285;
   }
 
-  public update(delta: number) {
+  public update(delta: number, enemies: Drawable[]) {
     const speed = 0.03;
     let newAngle = this.indicatorAngle + speed;
     this.indicatorAngle = newAngle;
 
     this.indicatorLineEnd.x = this.position.x + Math.cos(newAngle) * this.width * 0.45;
     this.indicatorLineEnd.y = this.position.y + Math.sin(newAngle) * this.width * 0.45;
+
+    // this.bleeps = enemies.map(enemy => enemy.position);
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
@@ -49,5 +52,12 @@ export default class Radar extends Drawable {
     ctx.moveTo(this.position.x, this.position.y);
     ctx.lineTo(this.indicatorLineEnd.x, this.indicatorLineEnd.y);
     ctx.stroke();
+
+    // this.bleeps.forEach(bleep => {
+    //   ctx.fillStyle = '#5fc345';
+    //   ctx.beginPath();
+    //   ctx.arc(bleep.x, bleep.y, this.width * 0.005, 0, 2 * Math.PI);
+    //   ctx.fill();
+    // });
   }
 }
