@@ -125,8 +125,13 @@ function htmlCopy() {
   return gulp.src('src/index.html').pipe(gulp.dest('build/'));
 }
 
+function assetCopy() {
+  return gulp.src('assets/*.*').pipe(gulp.dest('build/assets'));
+}
+
 gulp.task('dev:build', jsDev);
 gulp.task('pro:build', jsProd);
 gulp.task('dev:html', htmlCopy);
-gulp.task('dist', gulp.series('dev:html', 'pro:build'));
-gulp.task('default', gulp.series('dev:html', 'dev:build'));
+gulp.task('dev:assets', assetCopy);
+gulp.task('dist', gulp.series('dev:html', 'dev:assets', 'pro:build'));
+gulp.task('default', gulp.series('dev:html', 'dev:assets', 'dev:build'));

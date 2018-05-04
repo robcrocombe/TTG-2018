@@ -4,8 +4,13 @@ import Light from './light';
 import Mouse from '../mouse';
 
 export default class Player extends Drawable {
+  img: HTMLImageElement;
+
   constructor(inWidth: number, inHeight: number, inPosition: Point) {
     super(inWidth, inHeight, inPosition);
+
+    this.img = new Image();
+    this.img.src = '/assets/player.svg';
   }
 
   private light = new Light(380, 500, { x: 0, y: 0 });
@@ -36,7 +41,8 @@ export default class Player extends Drawable {
     ctx.lineWidth = 3;
 
     ctx.beginPath();
-    ctx.rect(this.pos.x, this.pos.y, this.width, this.height);
+    // ctx.rect(this.pos.x, this.pos.y, this.width, this.height);
+    ctx.drawImage(this.img, this.pos.x, this.pos.y, this.width, this.height);
     ctx.stroke();
     ctx.fill();
     ctx.closePath();
