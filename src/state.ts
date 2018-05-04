@@ -6,10 +6,15 @@ import Mouse from './mouse';
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d');
 
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
 const player = new Player(100, 50, { x: 400, y: 300 });
 const radar = new Radar(300, 300, { x: 200, y: 300 });
 const light = new Light(canvas, ctx);
 const mouse = new Mouse(canvas);
+
+window.addEventListener('resize', resizeCanvas, false);
 
 export function update(delta: number) {
   player.update(delta);
@@ -23,4 +28,9 @@ export function draw(fps: number) {
   player.draw(ctx);
   light.draw();
   radar.draw(ctx);
+}
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
 }
