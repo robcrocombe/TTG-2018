@@ -1,10 +1,9 @@
 import Radar from './gameobjects/radar';
-import Point from './primitives/point';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d');
 
-const radar = new Radar(300, 300, new Point(300, 200));
+const radar = new Radar(300, 300, { x: 200, y: 300 });
 
 export function update(delta: number) {
   radar.update(delta);

@@ -1,5 +1,4 @@
 import Drawable from '../primitives/drawable';
-import Point from '../primitives/point';
 
 export default class Radar extends Drawable {
   private indicatorAngle;
@@ -7,7 +6,7 @@ export default class Radar extends Drawable {
 
   constructor(inWidth: number, inHeight: number, inPosition: Point) {
     super(inWidth, inHeight, inPosition);
-    this.indicatorLineEnd = new Point(135, 135);
+    this.indicatorLineEnd = { x: 135, y: 135 };
     this.indicatorAngle = 285;
   }
 

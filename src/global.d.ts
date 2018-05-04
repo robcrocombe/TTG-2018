@@ -1,7 +1,8 @@
-export {}; // Fixes compile error
+interface Dictionary<T> {
+  [key: string]: T;
+}
 
-declare global {
-  interface Dictionary<T> {
-    [key: string]: T;
-  }
+interface Point {
+  x: number;
+  y: number;
 }
