@@ -7,9 +7,6 @@ import Mouse from './mouse';
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d');
 
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
 const player = new Player(100, 50, { x: 400, y: 300 });
 const radar = new Radar(300, 300, { x: 200, y: 300 });
 const light = new Light(canvas, ctx);
@@ -42,7 +39,14 @@ export function draw(fps: number) {
   });
 }
 
+resizeCanvas();
+
 function resizeCanvas() {
   canvas.width = window.innerWidth;
   canvas.height = window.innerHeight;
+
+  if (radar) {
+    radar.position.x = window.innerWidth - 150;
+    radar.position.y = window.innerHeight - 150;
+  }
 }
