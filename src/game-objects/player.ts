@@ -1,6 +1,7 @@
 import Drawable from '../primitives/drawable';
 import Keydown from '../keys';
 import Light from './light';
+import Mouse from '../mouse';
 
 export default class Player extends Drawable {
   constructor(inWidth: number, inHeight: number, inPosition: Point) {
