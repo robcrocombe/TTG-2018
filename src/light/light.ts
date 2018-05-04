@@ -13,7 +13,7 @@ export default class Light {
     this.ctx = ctx;
     this.pos = {
       x: canvas.width / 2,
-      y: canvas.height - this.height,
+      y: canvas.height / 2,
     };
   }
 
