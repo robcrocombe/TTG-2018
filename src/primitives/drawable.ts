@@ -1,5 +1,3 @@
-import Point from './point';
-
 export default class Drawable {
   protected width: number;
   protected height: number;
