@@ -21,6 +21,7 @@ export default class Player extends Drawable {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
+    ctx.save();
     ctx.fillStyle = '#595d63';
     ctx.strokeStyle = '#595d63';
     ctx.lineWidth = 3;
@@ -30,5 +31,6 @@ export default class Player extends Drawable {
     ctx.stroke();
     ctx.fill();
     ctx.closePath();
+    ctx.restore();
   }
 }
