@@ -25,4 +25,14 @@ export default class Enemy extends Drawable {
 
     super(width, height, inPosition);
   }
+
+  public update(delta: number) {}
+
+  public draw(ctx: CanvasRenderingContext2D) {
+    ctx.fillStyle = '#ffa500';
+    ctx.beginPath();
+    ctx.rect(this.position.x, this.position.y, this.width, this.height);
+    ctx.stroke();
+    ctx.fill();
+  }
 }
