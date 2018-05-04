@@ -1,4 +1,5 @@
 import Radar from './gameobjects/radar';
+import Enemy, { EnemyType } from './gameobjects/enemy';
 import Player from './gameobjects/player';
 import Light from './light/light';
 import Mouse from './mouse';
@@ -13,13 +14,20 @@ const player = new Player(100, 50, { x: 400, y: 300 });
 const radar = new Radar(300, 300, { x: 200, y: 300 });
 const light = new Light(canvas, ctx);
 const mouse = new Mouse(canvas);
+const enemies = [
+  new Enemy({ x: 300, y: 200 }, EnemyType.Shark),
+  new Enemy({ x: 10, y: 10 }, EnemyType.BigFish),
+];
 
 window.addEventListener('resize', resizeCanvas, false);
 
 export function update(delta: number) {
+  radar.update(delta, enemies);
   player.update(delta);
-  radar.update(delta);
   light.update(delta, mouse);
+  enemies.forEach(enemy => {
+    enemy.update(delta);
+  });
 }
 
 export function draw(fps: number) {
@@ -28,6 +36,10 @@ export function draw(fps: number) {
   player.draw(ctx);
   light.draw();
   radar.draw(ctx);
+
+  enemies.forEach(enemy => {
+    enemy.draw(ctx);
+  });
 }
 
 function resizeCanvas() {
