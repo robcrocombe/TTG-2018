@@ -1,7 +1,7 @@
-import Radar from './gameobjects/radar';
-import Enemy, { EnemyType } from './gameobjects/enemy';
-import Player from './gameobjects/player';
-import Light from './light/light';
+import Radar from './game-objects/radar';
+import Enemy, { EnemyType } from './game-objects/enemy';
+import Player from './game-objects/player';
+import Light from './game-objects/light';
 import Mouse from './mouse';
 
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
