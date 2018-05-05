@@ -36,6 +36,11 @@ export function draw(fps: number) {
   });
 
   radar.draw(ctx);
+
+  ctx.font = '48px serif';
+  ctx.fillStyle = '#FFFFFF';
+  ctx.fillText('HEALTH: ' + player.health, 10, 50);
+
   ctx.restore();
 }
 

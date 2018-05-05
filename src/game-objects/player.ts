@@ -25,9 +25,18 @@ export default class Player extends Drawable {
   private buoyancy: number = 0.2;
   private balast: number = 0.5;
 
+  health: number = 100;
+
   public update(delta: number, maxDepth: number, mouse: Mouse) {
-    if (Keydown.space && this.pos.y + this.height < maxDepth) {
+    let oldPosY = this.pos.y;
+
+    if (Keydown.space) {
       this.pos.y += this.balast * delta;
+    }
+
+    if (this.pos.y + this.height >= maxDepth) {
+      this.pos.y = oldPosY;
+      this.health -= 10;
     }
 
     if (this.pos.y > this.targetY) {
@@ -49,7 +58,6 @@ export default class Player extends Drawable {
     ctx.lineWidth = 3;
 
     ctx.beginPath();
-    // ctx.rect(this.pos.x, this.pos.y, this.width, this.height);
     ctx.drawImage(this.img, this.pos.x, this.pos.y, this.width, this.height);
     ctx.stroke();
     ctx.fill();

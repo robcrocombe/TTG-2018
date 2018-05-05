@@ -34,6 +34,10 @@ export default class Enemy extends Drawable {
   }
 
   public update(delta: number, mouse: Mouse) {
+    if (this.pos.x + this.width < 0) {
+      this.pos.x = 2000;
+    }
+
     this.pos.x -= this.speed * delta;
 
     if (mouse.intersects(this.pos.x, this.pos.y, this.width, this.height)) {
