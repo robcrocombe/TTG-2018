@@ -11,10 +11,12 @@ export default class Player extends Drawable {
     this.img = new Image();
     this.img.src = '/assets/player.svg';
 
-    const inWidth = this.img.width * scale;
-    const inHeight = this.img.height * scale;
-    this.width = inWidth;
-    this.height = inHeight;
+    this.img.onload = () => {
+      const inWidth = this.img.width * scale;
+      const inHeight = this.img.height * scale;
+      this.width = inWidth;
+      this.height = inHeight;
+    };
   }
 
   private light = new Light(380, 500, { x: 0, y: 0 });
