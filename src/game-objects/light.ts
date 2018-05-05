@@ -3,7 +3,7 @@ import Mouse from '../mouse';
 
 export default class Light extends Drawable {
   angle = 0;
-  intensity = 500;
+  intensity = 300;
 
   public update(delta: number, mouse: Mouse) {
     const targetX = mouse.pos.x - this.pos.x;

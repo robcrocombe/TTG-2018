@@ -29,15 +29,15 @@ export function draw(fps: number) {
   ctx.save();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  player.draw(ctx);
-
   enemies.forEach(enemy => {
     enemy.draw(ctx);
   });
 
+  player.draw(ctx);
+
   radar.draw(ctx, canvas);
 
-  ctx.font = '48px serif';
+  ctx.font = '38px sans-serif';
   ctx.fillStyle = '#FFFFFF';
   ctx.fillText('HEALTH: ' + player.health, 10, 50);
 
