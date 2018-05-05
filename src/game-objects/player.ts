@@ -4,7 +4,7 @@ import Light from './light';
 import Mouse from '../mouse';
 
 export default class Player extends Drawable {
-  img: HTMLImageElement;
+  private img: HTMLImageElement;
 
   constructor(scale: number, inPosition: Point) {
     super(0, 0, inPosition);
@@ -32,8 +32,8 @@ export default class Player extends Drawable {
       this.pos.y -= this.buoyancy * delta;
     }
 
-    this.light.pos.x = this.pos.x + this.width;
-    this.light.pos.y = this.pos.y + this.height / 2;
+    this.light.pos.x = this.pos.x + (this.width - 25);
+    this.light.pos.y = this.pos.y + (this.height / 2 + 20);
 
     this.light.update(delta, mouse);
   }
