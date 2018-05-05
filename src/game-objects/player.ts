@@ -43,11 +43,8 @@ export default class Player extends Drawable {
 
     if (this.pos.y + this.height >= maxDepth) {
       this.pos.y = oldPosY;
-      this.health -= 10;
 
-      if (this.hitSound.paused) {
-        this.hitSound.play();
-      }
+      this.hit(delta);
     }
 
     if (this.pos.y > this.targetY) {
@@ -66,5 +63,13 @@ export default class Player extends Drawable {
     ctx.save();
     ctx.drawImage(this.img, this.pos.x, this.pos.y, this.width, this.height);
     ctx.restore();
+  }
+
+  public hit(delta: number) {
+    this.health -= Math.ceil(0.05 * delta);
+
+    if (this.hitSound.paused) {
+      this.hitSound.play();
+    }
   }
 }
