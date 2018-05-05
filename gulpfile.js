@@ -4,6 +4,7 @@ process.noDeprecation = true;
 
 const gulp = require('gulp');
 const gutil = require('gulp-util');
+const ghPages = require('gulp-gh-pages');
 const path = require('path');
 const webpack = require('webpack');
 const WebpackDevServer = require('webpack-dev-server');
@@ -11,6 +12,7 @@ const CheckerPlugin = require('awesome-typescript-loader').CheckerPlugin;
 const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 let firstRun = true;
+const destDir = process.env.NODE_ENV === 'production' ? 'dist/' : 'build/';
 
 // Stop HardSourceWebpackPlugin from printing info about its cache
 class SilentHardSource {
@@ -76,7 +78,7 @@ const jsConfig = {
     app: path.resolve(__dirname, 'src/app.ts'),
   },
   output: {
-    path: path.resolve(__dirname, 'build/'),
+    path: path.resolve(__dirname, destDir),
     filename: 'bundle.js',
   },
   plugins: [
@@ -93,7 +95,7 @@ const jsConfig = {
 
 function jsDev() {
   new WebpackDevServer(webpack(jsConfig), {
-    contentBase: path.join(__dirname, 'build/'),
+    contentBase: path.join(__dirname, destDir),
     stats: statConfig,
   }).listen(3000, 'localhost', err => {
     if (err) throw new gutil.PluginError('webpack-dev-server', err);
@@ -122,16 +124,21 @@ function jsProd() {
 }
 
 function htmlCopy() {
-  return gulp.src('src/index.html').pipe(gulp.dest('build/'));
+  return gulp.src('src/index.html').pipe(gulp.dest(destDir));
 }
 
 function assetCopy() {
-  return gulp.src('assets/*.*').pipe(gulp.dest('build/assets'));
+  return gulp.src('assets/*.*').pipe(gulp.dest(`${destDir}assets`));
+}
+
+function deploy() {
+  return gulp.src('./dist/**/*').pipe(ghPages());
 }
 
 gulp.task('dev:build', jsDev);
 gulp.task('pro:build', jsProd);
-gulp.task('dev:html', htmlCopy);
-gulp.task('dev:assets', assetCopy);
-gulp.task('dist', gulp.series('dev:html', 'dev:assets', 'pro:build'));
-gulp.task('default', gulp.series('dev:html', 'dev:assets', 'dev:build'));
+gulp.task('copy:html', htmlCopy);
+gulp.task('copy:assets', assetCopy);
+gulp.task('deploy', deploy);
+gulp.task('dist', gulp.series('copy:html', 'copy:assets', 'pro:build', 'deploy'));
+gulp.task('default', gulp.series('copy:html', 'copy:assets', 'dev:build'));

@@ -8,3 +8,5 @@ build/
 .env
 .DS_Store
 .wpcache/
+dist/
+.publish/

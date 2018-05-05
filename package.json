@@ -41,6 +41,7 @@
     "@types/mainloop.js": "1.0.5",
     "awesome-typescript-loader": "5.0.0",
     "gulp": "4.0.0",
+    "gulp-gh-pages": "0.5.4",
     "gulp-util": "3.0.8",
     "hard-source-webpack-plugin": "0.6.4",
     "keycode": "2.2.0",
