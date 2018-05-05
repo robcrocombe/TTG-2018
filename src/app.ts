@@ -15,9 +15,6 @@ function draw() {
   state.draw(loop.getFPS());
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  loop
-    .setUpdate(state.update)
-    .setDraw(draw)
-    .start();
-});
+loop.setUpdate(state.update).setDraw(draw);
+
+(window as any).startGame = loop.start;
