@@ -14,7 +14,7 @@ export default class Light extends Drawable {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
-    const triangleY = this.intensity - this.width / 6;
+    const triangleY = this.pos.y + this.intensity;
 
     const grd = ctx.createLinearGradient(
       this.pos.x,
@@ -22,7 +22,7 @@ export default class Light extends Drawable {
       this.pos.x,
       triangleY + this.height
     );
-    grd.addColorStop(0, '#8ed6ff');
+    grd.addColorStop(0, 'rgba(142,214,255, 0.7)');
     grd.addColorStop(1, 'rgba(0, 0, 0, 0)');
 
     this.drawTriangle(ctx, this.pos.x, triangleY, this.width, this.height, grd);

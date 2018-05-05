@@ -6,7 +6,7 @@ import Mouse from './mouse';
 const canvas = document.getElementById('canvas') as HTMLCanvasElement;
 const ctx = canvas.getContext('2d');
 
-const player = new Player(131 * 1.5, 57 * 1.5, { x: 400, y: 10 });
+const player = new Player(0.11, { x: 400, y: 10 });
 const radar = new Radar(300, 300, { x: 200, y: 300 });
 const mouse = new Mouse(canvas);
 const enemies = [

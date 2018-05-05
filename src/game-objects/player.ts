@@ -6,11 +6,15 @@ import Mouse from '../mouse';
 export default class Player extends Drawable {
   img: HTMLImageElement;
 
-  constructor(inWidth: number, inHeight: number, inPosition: Point) {
-    super(inWidth, inHeight, inPosition);
-
+  constructor(scale: number, inPosition: Point) {
+    super(0, 0, inPosition);
     this.img = new Image();
     this.img.src = '/assets/player.svg';
+
+    const inWidth = this.img.width * scale;
+    const inHeight = this.img.height * scale;
+    this.width = inWidth;
+    this.height = inHeight;
   }
 
   private light = new Light(380, 500, { x: 0, y: 0 });
@@ -35,6 +39,8 @@ export default class Player extends Drawable {
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
+    this.light.draw(ctx);
+
     ctx.save();
     ctx.fillStyle = '#595d63';
     ctx.strokeStyle = '#595d63';
@@ -47,7 +53,5 @@ export default class Player extends Drawable {
     ctx.fill();
     ctx.closePath();
     ctx.restore();
-
-    this.light.draw(ctx);
   }
 }
