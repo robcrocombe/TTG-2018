@@ -2,12 +2,23 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>TTG 2018</title>
+    <title>SUB-MISSION</title>
   </head>
   <body style="margin: 0; padding: 0; background: #1c2429; overflow:hidden">
+    <audio src="/assets/Underwater.aif" type="audio/aif" id="music" autoplay></audio>
+
+    <button id="start" onclick="fbgm()">START</button>
+
     <div class="container">
-      <canvas id="canvas" style="width: 100%; height: 100%;"></canvas>
+      <canvas id="canvas" style="width: 100%; height: 100%; display:none"></canvas>
     </div>
     <script src="bundle.js"></script>
-  </body>
+    <script>
+      function fbgm() {
+        document.getElementById('music').play();
+        document.getElementById('start').style = "display: none;";
+        document.getElementById('canvas').style = "display: block;";
+      }
+    </script>
+    <body>
 </html>
