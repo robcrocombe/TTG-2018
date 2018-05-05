@@ -4,17 +4,19 @@ import Light from './light';
 import Mouse from '../mouse';
 
 export default class Player extends Drawable {
-  img: HTMLImageElement;
+  private img: HTMLImageElement;
 
   constructor(scale: number, inPosition: Point) {
     super(0, 0, inPosition);
     this.img = new Image();
     this.img.src = '/assets/player.svg';
 
-    const inWidth = this.img.width * scale;
-    const inHeight = this.img.height * scale;
-    this.width = inWidth;
-    this.height = inHeight;
+    this.img.onload = () => {
+      const inWidth = this.img.width * scale;
+      const inHeight = this.img.height * scale;
+      this.width = inWidth;
+      this.height = inHeight;
+    };
   }
 
   private light = new Light(380, 500, { x: 0, y: 0 });
@@ -32,8 +34,8 @@ export default class Player extends Drawable {
       this.pos.y -= this.buoyancy * delta;
     }
 
-    this.light.pos.x = this.pos.x + this.width;
-    this.light.pos.y = this.pos.y + this.height / 2;
+    this.light.pos.x = this.pos.x + (this.width - 25);
+    this.light.pos.y = this.pos.y + (this.height / 2 + 20);
 
     this.light.update(delta, mouse);
   }
