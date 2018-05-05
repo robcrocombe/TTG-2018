@@ -22,7 +22,7 @@ export default class Radar extends Drawable {
     this.bleeps = enemies.map(enemy => enemy.pos);
   }
 
-  public draw(ctx: CanvasRenderingContext2D) {
+  public draw(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement) {
     ctx.save();
     ctx.fillStyle = 'rgba(0, 0, 0, 0.6)';
     ctx.strokeStyle = '#5fc345';
@@ -54,11 +54,13 @@ export default class Radar extends Drawable {
     ctx.lineTo(this.indicatorLineEnd.x, this.indicatorLineEnd.y);
     ctx.stroke();
 
+    ctx.translate(this.pos.x - this.width / 4, this.pos.y);
+    ctx.scale(0.1, 0.1);
     if (this.bleeps) {
       this.bleeps.forEach(bleep => {
         ctx.fillStyle = '#5fc345';
         ctx.beginPath();
-        ctx.arc(bleep.x, bleep.y, this.width * 0.005, 0, 2 * Math.PI);
+        ctx.arc(bleep.x, bleep.y, this.width * 0.2, 0, 2 * Math.PI);
         ctx.fill();
       });
     }

@@ -35,7 +35,7 @@ export function draw(fps: number) {
     enemy.draw(ctx);
   });
 
-  radar.draw(ctx);
+  radar.draw(ctx, canvas);
 
   ctx.font = '48px serif';
   ctx.fillStyle = '#FFFFFF';
