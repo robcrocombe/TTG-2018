@@ -1,5 +1,6 @@
 import Drawable from '../primitives/drawable';
 import Mouse from '../mouse';
+import Player from './player';
 
 export enum EnemyType {
   Shark,
@@ -34,12 +35,25 @@ export default class Enemy extends Drawable {
     };
   }
 
-  public update(delta: number, mouse: Mouse) {
+  intersects(x, y, width, height): boolean {
+    return !(
+      x > this.pos.x + this.width ||
+      x + width < this.pos.x ||
+      y > this.pos.y + this.height ||
+      y + height < this.pos.y
+    );
+  }
+
+  public update(delta: number, mouse: Mouse, player: Player) {
     if (this.pos.x + this.width < 0) {
       this.pos.x = 2000;
     }
 
     this.pos.x -= this.speed * delta;
+
+    if (this.intersects(player.pos.x, player.pos.y, player.width, player.height)) {
+      player.health -= 10;
+    }
 
     if (mouse.intersects(this.pos.x, this.pos.y, this.width, this.height)) {
       this.visible = true;

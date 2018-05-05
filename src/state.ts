@@ -14,6 +14,8 @@ const enemies = [
   new Enemy({ x: 2000, y: 10 }, EnemyType.BigFish),
 ];
 
+let gameover = false;
+
 window.addEventListener('resize', resizeCanvas, false);
 
 export function update(delta: number) {
@@ -21,25 +23,37 @@ export function update(delta: number) {
   player.update(delta, canvas.height, mouse);
 
   enemies.forEach(enemy => {
-    enemy.update(delta, mouse);
+    enemy.update(delta, mouse, player);
   });
+
+  if (player.health < 0) {
+    // end game lol
+    player.health = 0;
+    gameover = true;
+  }
 }
 
 export function draw(fps: number) {
   ctx.save();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  enemies.forEach(enemy => {
-    enemy.draw(ctx);
-  });
+  if (gameover) {
+    ctx.font = '38px sans-serif';
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillText('GAME OVER', 10, 50);
+  } else {
+    enemies.forEach(enemy => {
+      enemy.draw(ctx);
+    });
 
-  player.draw(ctx);
+    player.draw(ctx);
 
-  radar.draw(ctx, canvas);
+    radar.draw(ctx, canvas);
 
-  ctx.font = '38px sans-serif';
-  ctx.fillStyle = '#FFFFFF';
-  ctx.fillText('HEALTH: ' + player.health, 10, 50);
+    ctx.font = '38px sans-serif';
+    ctx.fillStyle = '#FFFFFF';
+    ctx.fillText('HEALTH: ' + player.health, 10, 50);
+  }
 
   ctx.restore();
 }
