@@ -15,6 +15,7 @@ const enemies = [
 ];
 
 let gameover = false;
+let score = 0;
 
 window.addEventListener('resize', resizeCanvas, false);
 
@@ -31,6 +32,10 @@ export function update(delta: number) {
     player.health = 0;
     gameover = true;
   }
+
+  if (!gameover) {
+    score += 0.005 * delta;
+  }
 }
 
 export function draw(fps: number) {
@@ -41,6 +46,7 @@ export function draw(fps: number) {
     ctx.font = '38px sans-serif';
     ctx.fillStyle = '#FFFFFF';
     ctx.fillText('GAME OVER', 10, 50);
+    ctx.fillText('DISTANCE: ' + Math.ceil(score) + 'm', 10, 90);
   } else {
     enemies.forEach(enemy => {
       enemy.draw(ctx);
@@ -53,6 +59,7 @@ export function draw(fps: number) {
     ctx.font = '38px sans-serif';
     ctx.fillStyle = '#FFFFFF';
     ctx.fillText('HEALTH: ' + player.health, 10, 50);
+    ctx.fillText('DISTANCE: ' + Math.ceil(score) + 'm', 10, 90);
   }
 
   ctx.restore();
