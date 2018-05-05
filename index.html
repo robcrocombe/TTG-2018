@@ -2,10 +2,10 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>SUB-MISSION</title>
+    <title>Sub-Mission</title>
   </head>
   <body style="margin: 0; padding: 0; background: #1c2429; overflow:hidden">
-    <audio src="/assets/Underwater.aif" type="audio/aif" id="music" autoplay></audio>
+    <audio id="music" autoplay="false"></audio>
 
     <button id="start" onclick="fbgm()">START</button>
 
@@ -15,7 +15,9 @@
     <script src="bundle.js"></script>
     <script>
       function fbgm() {
-        document.getElementById('music').play();
+        const music = document.getElementById('music');
+        music.src = "assets/Underwater.mp3";
+        music.play();
         document.getElementById('start').style = "display: none;";
         document.getElementById('canvas').style = "display: block;";
       }
