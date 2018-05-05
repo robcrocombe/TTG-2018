@@ -8,29 +8,30 @@ export enum EnemyType {
 
 export default class Enemy extends Drawable {
   public type: EnemyType;
-  private speed: number;
+  private speed: number = 0;
   private visible: boolean;
+  private img: HTMLImageElement;
 
   constructor(inPosition: Point, type: EnemyType) {
-    let width = 0;
-    let height = 0;
-    let speed = 0;
+    super(0, 0, inPosition);
 
-    switch (type) {
-      case EnemyType.Shark:
-        width = 200;
-        height = 30;
-        speed = 0.2;
-        break;
-      case EnemyType.BigFish:
-        width = 200;
-        height = 200;
-        speed = 0.1;
-        break;
-    }
+    this.img = new Image();
+    this.img.src = './assets/shark.svg';
 
-    super(width, height, inPosition);
-    this.speed = speed;
+    this.img.onload = () => {
+      switch (type) {
+        case EnemyType.Shark:
+          this.width = this.img.width * 0.1;
+          this.height = this.img.height * 0.1;
+          this.speed = 0.2;
+          break;
+        case EnemyType.BigFish:
+          this.width = this.img.width * 0.05;
+          this.height = this.img.height * 0.05;
+          this.speed = 0.1;
+          break;
+      }
+    };
   }
 
   public update(delta: number, mouse: Mouse) {
@@ -46,11 +47,7 @@ export default class Enemy extends Drawable {
   public draw(ctx: CanvasRenderingContext2D) {
     if (this.visible) {
       ctx.save();
-      ctx.fillStyle = '#ffa500';
-      ctx.beginPath();
-      ctx.rect(this.pos.x, this.pos.y, this.width, this.height);
-      ctx.stroke();
-      ctx.fill();
+      ctx.drawImage(this.img, this.pos.x, this.pos.y, this.width, this.height);
       ctx.restore();
     }
   }

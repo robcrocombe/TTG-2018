@@ -44,16 +44,7 @@ export default class Player extends Drawable {
     this.light.draw(ctx);
 
     ctx.save();
-    ctx.fillStyle = '#595d63';
-    ctx.strokeStyle = '#595d63';
-    ctx.lineWidth = 3;
-
-    ctx.beginPath();
-    // ctx.rect(this.pos.x, this.pos.y, this.width, this.height);
     ctx.drawImage(this.img, this.pos.x, this.pos.y, this.width, this.height);
-    ctx.stroke();
-    ctx.fill();
-    ctx.closePath();
     ctx.restore();
   }
 }
