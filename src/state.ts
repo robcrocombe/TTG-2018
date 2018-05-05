@@ -10,8 +10,8 @@ const player = new Player(0.11, { x: 400, y: 10 });
 const radar = new Radar(300, 300, { x: 200, y: 300 });
 const mouse = new Mouse(canvas);
 const enemies = [
-  new Enemy({ x: 300, y: 200 }, EnemyType.Shark),
-  new Enemy({ x: 10, y: 10 }, EnemyType.BigFish),
+  new Enemy({ x: 2000, y: 200 }, EnemyType.Shark),
+  new Enemy({ x: 2000, y: 10 }, EnemyType.BigFish),
 ];
 
 window.addEventListener('resize', resizeCanvas, false);
@@ -19,20 +19,24 @@ window.addEventListener('resize', resizeCanvas, false);
 export function update(delta: number) {
   radar.update(delta, enemies);
   player.update(delta, canvas.height, mouse);
+
   enemies.forEach(enemy => {
     enemy.update(delta);
   });
 }
 
 export function draw(fps: number) {
+  ctx.save();
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
   player.draw(ctx);
-  radar.draw(ctx);
 
   enemies.forEach(enemy => {
     enemy.draw(ctx);
   });
+
+  radar.draw(ctx);
+  ctx.restore();
 }
 
 resizeCanvas();
