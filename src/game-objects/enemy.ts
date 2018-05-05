@@ -1,4 +1,5 @@
 import Drawable from '../primitives/drawable';
+import Mouse from '../mouse';
 
 export enum EnemyType {
   Shark,
@@ -7,8 +8,8 @@ export enum EnemyType {
 
 export default class Enemy extends Drawable {
   public type: EnemyType;
-
   private speed: number;
+  private visible: boolean;
 
   constructor(inPosition: Point, type: EnemyType) {
     let width = 0;
@@ -32,17 +33,25 @@ export default class Enemy extends Drawable {
     this.speed = speed;
   }
 
-  public update(delta: number) {
+  public update(delta: number, mouse: Mouse) {
     this.pos.x -= this.speed * delta;
+
+    if (mouse.intersects(this.pos.x, this.pos.y, this.width, this.height)) {
+      this.visible = true;
+    } else {
+      this.visible = false;
+    }
   }
 
   public draw(ctx: CanvasRenderingContext2D) {
-    ctx.save();
-    ctx.fillStyle = '#ffa500';
-    ctx.beginPath();
-    ctx.rect(this.pos.x, this.pos.y, this.width, this.height);
-    ctx.stroke();
-    ctx.fill();
-    ctx.restore();
+    if (this.visible) {
+      ctx.save();
+      ctx.fillStyle = '#ffa500';
+      ctx.beginPath();
+      ctx.rect(this.pos.x, this.pos.y, this.width, this.height);
+      ctx.stroke();
+      ctx.fill();
+      ctx.restore();
+    }
   }
 }

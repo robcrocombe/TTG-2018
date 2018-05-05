@@ -6,6 +6,9 @@ export default class Mouse {
   onClick: Function;
   onRelease: Function;
 
+  private width: number;
+  private height: number;
+
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
     this.pos = { x: 0, y: 0 };
@@ -15,6 +18,15 @@ export default class Mouse {
     window.addEventListener('mousedown', this.mousedown.bind(this));
     window.addEventListener('mouseup', this.mouseup.bind(this));
     window.addEventListener('mousemove', this.mousemove.bind(this));
+  }
+
+  intersects(x, y, width, height): boolean {
+    return !(
+      x > this.pos.x + this.width ||
+      x + width < this.pos.x ||
+      y > this.pos.y + this.height ||
+      y + height < this.pos.y
+    );
   }
 
   getMousePos(e: MouseEvent): Point {

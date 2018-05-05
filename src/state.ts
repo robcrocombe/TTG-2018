@@ -21,7 +21,7 @@ export function update(delta: number) {
   player.update(delta, canvas.height, mouse);
 
   enemies.forEach(enemy => {
-    enemy.update(delta);
+    enemy.update(delta, mouse);
   });
 }
 
