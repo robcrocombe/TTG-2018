@@ -9,7 +9,7 @@ export default class Player extends Drawable {
   constructor(scale: number, inPosition: Point) {
     super(0, 0, inPosition);
     this.img = new Image();
-    this.img.src = '/assets/player.svg';
+    this.img.src = './assets/player.svg';
 
     this.img.onload = () => {
       const inWidth = this.img.width * scale;
