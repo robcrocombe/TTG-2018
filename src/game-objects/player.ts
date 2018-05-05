@@ -5,6 +5,7 @@ import Mouse from '../mouse';
 
 export default class Player extends Drawable {
   private img: HTMLImageElement;
+  private hitSound: HTMLAudioElement;
 
   constructor(scale: number, inPosition: Point) {
     super(0, 0, inPosition);
@@ -17,6 +18,12 @@ export default class Player extends Drawable {
       this.width = inWidth;
       this.height = inHeight;
     };
+
+    this.hitSound = document.createElement('audio');
+    this.hitSound.src = './assets/hit.mp3';
+    this.hitSound.addEventListener('ended', () => {
+      this.hitSound.currentTime = 0;
+    });
   }
 
   private light = new Light(380, 500, { x: 0, y: 0 });
@@ -37,6 +44,10 @@ export default class Player extends Drawable {
     if (this.pos.y + this.height >= maxDepth) {
       this.pos.y = oldPosY;
       this.health -= 10;
+
+      if (this.hitSound.paused) {
+        this.hitSound.play();
+      }
     }
 
     if (this.pos.y > this.targetY) {
